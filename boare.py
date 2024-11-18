@@ -40,5 +40,5 @@ right_mancala = tk.Button(game,
                           command=lambda: button_click(-2))
 right_mancala.grid(row=0, column=8, rowspan=2, padx=2, pady=2)
 
-# Run the game
+# Run the gamed
 game.mainloop()
