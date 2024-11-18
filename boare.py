@@ -2,7 +2,7 @@ import tkinter as tk
 
 
 game = tk.Tk()
-game.title("Tic Tac Toe")
+game.title("Mancala")
 
 button_list = []
 theboard = ["" for _ in range(9)]
@@ -10,8 +10,8 @@ theboard = ["" for _ in range(9)]
 for row in range (2):
     # column of buttons
     for col in range(8):
-        number = row + 3 +col + 1
-        button_number = row * 3 + col   # Calculate button number (1 to 6)
+        number = row + 8 +col + 1
+        button_number = row * 2 + col   # Calculate button number (1 to 6)
         button = tk.Button(game,
                            text = " ",
                            font = ('Arial', 32),
