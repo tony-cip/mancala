@@ -1,7 +1,9 @@
 import tkinter as tk
 
 def button_click(num):
-    print(f"Button {num} clicked")  # Placeholder for button functionality
+   print(f"Button {num} clicked")  # Placeholder for button functionality
+
+
 
 game = tk.Tk()
 game.title("Mancala")
@@ -23,7 +25,7 @@ for row in range(2):
     for col in range(6):
         button_number = row * 6 + col  # Adjust button number (0 to 11)
         button = tk.Button(game,
-                           text=" ",
+                           text="4",
                            font=('Arial', 32),
                            width=6,
                            height=3,
