@@ -20,6 +20,8 @@ left_mancala = tk.Button(game,
                          command=lambda: button_click(-1))
 left_mancala.grid(row=0, column=0, rowspan=2, padx=2, pady=2)
 
+#hi nahom
+
 # Pits (6 per row)
 for row in range(2):
     for col in range(6):
