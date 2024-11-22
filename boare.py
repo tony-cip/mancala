@@ -3,6 +3,9 @@ import tkinter as tk
 
 def button_click(num):
    print(f"Button {num} clicked")  # Placeholder for button functionality
+   temp = num
+   button_list[temp+1].config(text=button_list[temp+1].cget("text")+1)
+
 
 
 
@@ -14,7 +17,7 @@ theboard = ["" for _ in range(14)]  # 14 slots (12 pits + 2 Mancalas)
 
 # Left Mancala Button
 left_mancala = tk.Button(game,
-                         text=" ",
+                         text= " ",
                          font=('Arial', 32),
                          width=6,
                          height=9,
@@ -23,19 +26,19 @@ left_mancala.grid(row=0, column=0, rowspan=2, padx=2, pady=2)
 
 
 for col in range(6):
-    button_number = col  # Adjust button number (0 to 11)
+    button_number = col  # (1-5)
     button = tk.Button(game,
-                       text=4,
+                       text= 4,
                        font=('Arial', 32),
                        width=6,
                        height=3,
                        command=lambda num=button_number: button_click(num))
-    button.grid(row=0, column=6-col , padx=2, pady=2)  # Shift by 1 for left Mancala
+    button.grid(row=0, column=6-col , padx=2, pady=2)  # Shift by 1 for right Mancala
     button_list.append(button)
 for col in range(6):
-    button_number = 6 + col  # Adjust button number (0 to 11)
+    button_number = 6 + col # (6 to 11)
     button = tk.Button(game,
-                       text=4,
+                       text= 4,
                        font=('Arial', 32),
                        width=6,
                        height=3,
