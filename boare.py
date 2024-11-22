@@ -3,8 +3,14 @@ import tkinter as tk
 
 def button_click(num):
    print(f"Button {num} clicked")  # Placeholder for button functionality
-   temp = num
-   button_list[temp+1].config(text=button_list[temp+1].cget("text")+1)
+   temp = num+1
+   for run in range(button_list[num].cget("text")):
+    if temp == 12:
+        temp = 0
+    button_list[temp].config(text=button_list[temp].cget("text")+1)
+    temp+=1
+   button_list[num].config(text = 0)
+
 
 
 
@@ -20,8 +26,7 @@ left_mancala = tk.Button(game,
                          text= " ",
                          font=('Arial', 32),
                          width=6,
-                         height=9,
-                         command=lambda: button_click(-1))
+                         height=9)
 left_mancala.grid(row=0, column=0, rowspan=2, padx=2, pady=2)
 
 
@@ -51,8 +56,7 @@ right_mancala = tk.Button(game,
                           text=" ",
                           font=('Arial', 32),
                           width=6,
-                          height=9,
-                          command=lambda: button_click(-2))
+                          height=9)
 right_mancala.grid(row=0, column=8, rowspan=2, padx=2, pady=2)
 
 # Run the gamed
