@@ -1,19 +1,8 @@
 import tkinter as tk
 
 
-rows, cols = (2, 6)
-arr = [[0]*cols]*rows
-arr = [[4 for i in range(cols)] for j in range(rows)]
-
-
 def button_click(num):
    print(f"Button {num} clicked")  # Placeholder for button functionality
-   if num >= 0 and num <= 5:
-    placeholder = num+1
-    for i in range(arr[0][0]):
-        button_list[placeholder].config(text=arr[0][0]+1)
-        placeholder+=1
-
 
 
 
@@ -33,18 +22,26 @@ left_mancala = tk.Button(game,
 left_mancala.grid(row=0, column=0, rowspan=2, padx=2, pady=2)
 
 
-# Pits (6 per row)
-for row in range(2):
-    for col in range(6):
-        button_number = row * 6 + col  # Adjust button number (0 to 11)
-        button = tk.Button(game,
-                           text=arr[row][col],
-                           font=('Arial', 32),
-                           width=6,
-                           height=3,
-                           command=lambda num=button_number: button_click(num))
-        button.grid(row=row, column=col + 1, padx=2, pady=2)  # Shift by 1 for left Mancala
-        button_list.append(button)
+for col in range(6):
+    button_number = col  # Adjust button number (0 to 11)
+    button = tk.Button(game,
+                       text=4,
+                       font=('Arial', 32),
+                       width=6,
+                       height=3,
+                       command=lambda num=button_number: button_click(num))
+    button.grid(row=0, column=6-col , padx=2, pady=2)  # Shift by 1 for left Mancala
+    button_list.append(button)
+for col in range(6):
+    button_number = 6 + col  # Adjust button number (0 to 11)
+    button = tk.Button(game,
+                       text=4,
+                       font=('Arial', 32),
+                       width=6,
+                       height=3,
+                       command=lambda num=button_number: button_click(num))
+    button.grid(row=1, column=col + 1, padx=2, pady=2)  # Shift by 1 for left Mancala
+    button_list.append(button)
 
 # Right Mancala Button
 right_mancala = tk.Button(game,
