@@ -24,9 +24,6 @@ def button_click(num):
     button_list[num].config(text = 0)
 
 
-
-
-
 game = tk.Tk()
 game.title("Mancala")
 
