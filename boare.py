@@ -24,6 +24,24 @@ def button_click(num):
     button_list[num].config(text = 0)
 
 
+
+def change_turn():
+    global user
+    user = not user
+    unlock_row()
+
+def lock_row():
+    for row in button_list:
+        for button in row:
+            button.config(state="disabled")
+
+def unlock_row():
+    for row in button_list:
+        for button in row:
+            button.config(state="enabled")
+
+
+
 game = tk.Tk()
 game.title("Mancala")
 
