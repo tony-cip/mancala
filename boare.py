@@ -1,29 +1,37 @@
 import tkinter as tk
 
-
 def button_click(num):
-    print(f"Button {num} clicked")  # Placeholder for button functionality
-    temp = num+1
+    global last_position
+    temp = num + 1
     leftM = True
-    for run in range(button_list[num].cget("text")):
-        if temp == 12:
-            right_mancala.config(text=right_mancala.cget("text")+1)
+    seeds = int(button_list[num].cget("text"))
+    button_list[num].config(text=0)
+
+    for run in range(seeds):
+        if temp == 12:  # right Mancala
+            if user:
+                right_mancala.config(text=int(right_mancala.cget("text")) + 1)
+            last_position = 12  # Update the last position
             temp = 0
             continue
-        if temp == 6 and leftM: #if temp is 6 AND left mancala board hasnt been used yet
-            left_mancala.config(text=left_mancala.cget("text")+1)
-            leftM = False
-            continue
-        elif temp == 6: #if temp is 6 and it already went
-            button_list[temp].config(text=button_list[temp].cget("text") + 1)
-            temp+= 1
-            leftM = True
-            continue
-        button_list[temp].config(text=button_list[temp].cget("text")+1)
-        temp+=1
-    button_list[num].config(text = 0)
-    change_turn()
 
+        if temp == 6 and leftM:   #if temp is 6 AND left mancala board hasnt been used yet
+            if not user:
+                left_mancala.config(text=int(left_mancala.cget("text")) + 1)
+            last_position = 6  # update the last position
+            leftM = False
+            temp += 1
+            continue
+
+        button_list[temp].config(text=int(button_list[temp].cget("text")) + 1)
+        last_position = temp  # update the last position
+        temp += 1
+
+    print("Last seed landed in position: {last_position}")
+    if last_position != 6 and last_position != 12:  # Change turn only if last seed is not in a Mancala
+        change_turn()
+    else:
+        print("Extra turn granted!")
 
 
 def change_turn():
@@ -35,9 +43,9 @@ def change_turn():
 
 def lock_row():
     if user:
-        # print ("one")
+        print ("one")
         for i in range(6):  # Lock the top row (indices 0 to 5)
-            # print ("two")
+            print ("two")
             button_list[i].config(state="disabled")
     else:
         for i in range(6, 12):  # Lock the bottom row (indices 6 to 11)
@@ -45,11 +53,11 @@ def lock_row():
 
 def unlock_row():
     if user:
-        # print("one")
+        print("one")
         for i in range(6):  # Lock the top row (indices 0 to 5)
             button_list[i].config(state="normal")
     else:
-        # print("two")
+        print("two")
         for i in range(6, 12):  # Lock the bottom row (indices 6 to 11)
             button_list[i].config(state="normal")
 
@@ -99,9 +107,7 @@ right_mancala = tk.Button(game,
                           width=6,
                           height=9)
 right_mancala.grid(row=0, column=8, rowspan=2, padx=2, pady=2)
-
-for i in range(6,12):  # Lock the top row (indices 0 to 5)
+for i in range(6,12):
     button_list[i].config(state="disabled")
-
-# Run the game
+# Run the gamed
 game.mainloop()
