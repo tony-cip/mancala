@@ -35,9 +35,9 @@ def change_turn():
 
 def lock_row():
     if user:
-        print ("one")
+        # print ("one")
         for i in range(6):  # Lock the top row (indices 0 to 5)
-            print ("two")
+            # print ("two")
             button_list[i].config(state="disabled")
     else:
         for i in range(6, 12):  # Lock the bottom row (indices 6 to 11)
@@ -45,11 +45,11 @@ def lock_row():
 
 def unlock_row():
     if user:
-        print("one")
+        # print("one")
         for i in range(6):  # Lock the top row (indices 0 to 5)
             button_list[i].config(state="normal")
     else:
-        print("two")
+        # print("two")
         for i in range(6, 12):  # Lock the bottom row (indices 6 to 11)
             button_list[i].config(state="normal")
 
@@ -100,5 +100,8 @@ right_mancala = tk.Button(game,
                           height=9)
 right_mancala.grid(row=0, column=8, rowspan=2, padx=2, pady=2)
 
-# Run the gamed
+for i in range(6,12):  # Lock the top row (indices 0 to 5)
+    button_list[i].config(state="disabled")
+
+# Run the game
 game.mainloop()
