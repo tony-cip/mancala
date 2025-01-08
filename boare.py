@@ -1,6 +1,20 @@
 import tkinter as tk
+import pygame
+from PIL import Image, ImageTk
+pygame.mixer.init()
+
+# pygame.mixer.music.load(r"C:\Users\nf\Downloads\button_click.mp3")
+# pygame.mixer.music.play()
+#click_sound = pygame.mixer.Sound(r"C:\\Users\\nf\\Downloads\\button_click.mp3")
+win_sound = pygame.mixer.Sound(r"C:\Users\tonyc\Downloads\win_sound.mp3")
+zero_sound = pygame.mixer.Sound(r"C:\Users\tonyc\Downloads\zero_click.mp3")
+
 
 def button_click(num):
+    if int(button_list[num].cget("text")) == 0:
+        print("dont do that")
+        zero_popup()
+        return
     global last_position
     mancalaAdd = True
     temp = num + 1
@@ -124,20 +138,103 @@ def win_popup(player):
     # Create a new pop-up window
     popup = tk.Toplevel()
     popup.title("Winner")
+    win_sound.play()
+
+    # Load the image
+    image_path = r"C:\Users\tonyc\Downloads\deformed_thing.png"  # Use the full path to your image file
+    img = Image.open(image_path)
+    img = img.resize((500, 500))  # Resize the image if necessary
+    img_tk = ImageTk.PhotoImage(img)
+
+    # Create a label to display the image
+    image_label = tk.Label(popup, image=img_tk)
+    image_label.image = img_tk  # Keep a reference to avoid garbage collection
+    image_label.pack(padx=40, pady=30)
+
+    # Add a label to display the winner's message
+    label = tk.Label(popup, text=player + " wins!", font=("Arial", 24))
+    label.pack(padx=40, pady=10)
+
+    # Close button
+    close_button = tk.Button(popup, text="Close", command=popup.destroy, font=("Arial", 14))
+    close_button.pack(pady=5)
+
+def zero_popup():
+    # Create a new pop-up window
+    popup = tk.Toplevel()
+    popup.title("Winner")
+    zero_sound.play()
+
+    # Load the image
+    image_path = r"C:\Users\tonyc\Downloads\you_clicked_0png.png"  # Use the full path to your image file
+    img = Image.open(image_path)
+    img = img.resize((500, 500))  # Resize the image if necessary
+    img_tk = ImageTk.PhotoImage(img)
+
+    # Create a label to display the image
+    image_label = tk.Label(popup, image=img_tk)
+    image_label.image = img_tk  # Keep a reference to avoid garbage collection
+    image_label.pack(padx=20, pady=10)
+
+    # Add a label to display the winner's message
+    label = tk.Label(popup, text="do NOT click zero. you cannot do that.", font=("Arial", 20))
+    label.pack(padx=40, pady=5)
+
+    # Close button
+    close_button = tk.Button(popup, text="I'm sorry.", command=popup.destroy, font=("Arial", 14))
+    close_button.pack(pady=10)
+
+
+def rule_popup():
+    # Create a new pop-up window
+    popup = tk.Toplevel()
+    popup.title("Rules")
 
     # Add a label to the pop-up
-    label = tk.Label(popup, text= player + "wins!", font=(24))
-    label.pack(padx=40, pady=30)
+    label = tk.Label(popup, text="Rules:", font=(15))
+    label.pack(padx=30, pady=5)
+
+    text_label = tk.Label(
+        popup,
+        text="1. Click on buttons in your row to sow seeds"
+             "\n2. Get as many seeds in your mancala to win"
+             "\n3. When you place your seed in an empty spot on your"
+             "\nside you can steal the seeds opposite to you"
+             "\n4. If you land in your mancala, you get an extra turn"
+             "\n5. All the seeds on one side of the board must be gone"
+             "\nin order to find a winner"
+             "\n6. Have fun.",
+        justify="left",  # Align the text to the left
+        font=("Arial", 13)
+    )
+    text_label.pack(padx=30, pady=5)
+
+    # Load the image
+    image_path = r"C:\Users\tonyc\Downloads\apple_cat.jpg"  # Use the full path to your image file
+    img = Image.open(image_path)
+    img = img.resize((400, 500))  # Resize the image if necessary
+    img_tk = ImageTk.PhotoImage(img)
+
+    # Create a label to display the image
+    image_label = tk.Label(popup, image=img_tk)
+    image_label.image = img_tk  # Keep a reference to avoid garbage collection
+    image_label.pack(padx=20, pady=10)
 
     close = tk.Button(popup, text="Close", command=popup.destroy, font=(24))
     close.pack(pady=5)
 
-    # restart = tk.Button(popup, text="Restart", command=lambda: [popup.destroy(), restart_game()])
-    #restart.pack(pady=10)
-
 
 game = tk.Tk()
 game.title("Mancala")
+
+pack_frame = tk.Frame(game)
+pack_frame.pack(fill="both", expand=True)  # Place the frame in the window
+
+rules_button = tk.Button(pack_frame, text="Rules", font=("Arial", 14), command=rule_popup)
+rules_button.pack(side="top", pady=10)  # Positioned at the top of the window
+
+grid_frame = tk.Frame(game)
+grid_frame.pack(side="top", fill="both", expand=True)  # Positioned below the rules button
 
 button_list = []
 theboard = ["" for _ in range(14)]  # 14 slots (12 pits + 2 Mancalas)
@@ -145,28 +242,27 @@ theboard = ["" for _ in range(14)]  # 14 slots (12 pits + 2 Mancalas)
 user = True
 
 # Left Mancala Button
-left_mancala = tk.Button(game,
+left_mancala = tk.Button(grid_frame,
                          text=0,
                          font=('Arial', 32),
                          width=6,
                          height=9)
 left_mancala.grid(row=0, column=0, rowspan=2, padx=2, pady=2)
 
-
 for col in range(6):
     button_number = col  # (1-5)
-    button = tk.Button(game,
-                       text= 4,
+    button = tk.Button(grid_frame,
+                       text=4,
                        font=('Arial', 32),
                        width=6,
                        height=3,
                        command=lambda num=button_number: button_click(num))
-    button.grid(row=0, column=6-col , padx=2, pady=2)  # Shift by 1 for right Mancala
+    button.grid(row=0, column=6 - col, padx=2, pady=2)  # Shift by 1 for right Mancala
     button_list.append(button)
 for col in range(6):
-    button_number = 6 + col # (6 to 11)
-    button = tk.Button(game,
-                       text= 4,
+    button_number = 6 + col  # (6 to 11)
+    button = tk.Button(grid_frame,
+                       text=4,
                        font=('Arial', 32),
                        width=6,
                        height=3,
@@ -175,15 +271,18 @@ for col in range(6):
     button_list.append(button)
 
 # Right Mancala Button
-right_mancala = tk.Button(game,
+right_mancala = tk.Button(grid_frame,
+
                           text=0,
                           font=('Arial', 32),
                           width=6,
                           height=9)
 right_mancala.grid(row=0, column=8, rowspan=2, padx=2, pady=2)
 
-for i in range(6,12):  # Lock the top row (indices 0 to 5)
+for i in range(6, 12):  # Lock the top row (indices 0 to 5)
     button_list[i].config(state="disabled")
 
 # Run the game
 game.mainloop()
+
+
